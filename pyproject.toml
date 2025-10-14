@@ -1,0 +1,14 @@
+[project]
+name = "audio-deduplicator-bot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram>=3.22.0",
+    "chromadb>=1.1.1",
+    "librosa>=0.11.0",
+    "numpy>=2.3.3",
+    "panns-inference>=0.1.1",
+    "torch>=2.8.0",
+]
