@@ -12,3 +12,4 @@ services:
       - ADMIN_USER_IDS=${ADMIN_USER_IDS}
     volumes:
       - ./chroma_db_chunked:/app/chroma_db_chunked
+      - ./model/Cnn14_mAP=0.431.pth:/root/panns_data/Cnn14_mAP=0.431.pth

@@ -33,7 +33,7 @@ class SijufyDedupBot(Bot):
 
         self.dp.message(
             Command("clear"),
-            F.from_user.id.in_(set(os.getenv("ADMIN_USER_IDS").split(","))),
+            F.from_user.id.in_(map(int, os.getenv("ADMIN_USER_IDS").split(","))),
         )(self.command_clear_handler)
 
         self.dp.message(F.content_type.in_({"audio"}))(
