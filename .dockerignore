@@ -1,0 +1,8 @@
+.env
+.venv/
+.vscode/
+temp/
+.gitignore
+.git
+.python-version
+README.md

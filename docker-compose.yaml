@@ -1,0 +1,10 @@
+services:
+  sijufy-audio-dedup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sijufy-audio-dedup
+    restart: unless-stopped
+    environment:
+      - AUDIO_DEDUP_BOT_TOKEN=${AUDIO_DEDUP_BOT_TOKEN}
+      - SIMILARITY_THRESHOLD=${SIMILARITY_THRESHOLD}
