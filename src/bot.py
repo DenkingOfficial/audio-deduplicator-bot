@@ -12,7 +12,6 @@ class SijufyDedupBot(Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.dp = Dispatcher()
-        self.admins = list(map(int, os.getenv("ADMIN_USER_IDS").split(",")))
 
         try:
             self.allowed_channel_id = int(os.getenv("ALLOWED_CHANNEL_ID"))
@@ -23,6 +22,18 @@ class SijufyDedupBot(Bot):
             )
             self.allowed_channel_id = None
 
+        try:
+            admin_ids_str = os.getenv("ADMIN_USER_IDS", "")
+            self.admin_ids = (
+                set(map(int, admin_ids_str.split(","))) if admin_ids_str else set()
+            )
+            logging.info(f"Admin user IDs loaded: {self.admin_ids}")
+        except (ValueError, TypeError):
+            logging.error(
+                "ADMIN_USER_IDS is not set or has an invalid format. No admin commands will be available."
+            )
+            self.admin_ids = set()
+
         self._register_handlers()
         self.audio_processor = UniqueMusicStorageApp(
             similarity_threshold=float(os.getenv("SIMILARITY_THRESHOLD", "0.04"))
@@ -32,10 +43,11 @@ class SijufyDedupBot(Bot):
     def _register_handlers(self):
         self.dp.message(Command("start"))(self.command_start_handler)
 
-        self.dp.message(
-            Command("clear"),
-            F.from_user.id.in_(self.admins),
-        )(self.command_clear_handler)
+        if self.admin_ids:
+            self.dp.message(
+                Command("clear"),
+                F.from_user.id.in_(self.admin_ids),
+            )(self.command_clear_handler)
 
         self.dp.message(F.content_type.in_({"audio"}))(
             self.handle_private_audio_message
