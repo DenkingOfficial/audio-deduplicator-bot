@@ -8,5 +8,7 @@ services:
     environment:
       - AUDIO_DEDUP_BOT_TOKEN=${AUDIO_DEDUP_BOT_TOKEN}
       - SIMILARITY_THRESHOLD=${SIMILARITY_THRESHOLD}
+      - ALLOWED_CHANNEL_ID=${ALLOWED_CHANNEL_ID}
+      - ADMIN_USER_IDS=${ADMIN_USER_IDS}
     volumes:
       - ./chroma_db_chunked:/app/chroma_db_chunked
